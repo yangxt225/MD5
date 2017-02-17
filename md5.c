@@ -24,6 +24,7 @@ unsigned char PADDING[]={
 // 实现功能：初始化
 void MD5Init(MD5_CTX *context)  
 {  
+	// 存放输入信息的长度，使用两个uint来存放，count[0]存放低位，count[1]存放高位；
     context->count[0] = 0;  
     context->count[1] = 0;  
 	/* 4个32位的链接变量(标准幻数)，最后存放MD5运算结果：将4个32位的state级联成128位输出；
@@ -49,17 +50,20 @@ void MD5Init(MD5_CTX *context)
 */
 void MD5Update(MD5_CTX *context, unsigned char *input, unsigned int inputlen)  
 {  
-    unsigned int i = 0,index = 0,partlen = 0;  
-	// 对64取余得到index，字节表示
+    unsigned int i = 0, index = 0, partlen = 0;  
+	// 对64(Bytes)取余得到index，字节表示
     index = (context->count[0] >> 3) & 0x3F;  
     partlen = 64 - index;  
-    context->count[0] += inputlen << 3;   // 转换成bit的长度存放
+	// 输入信息长度(inputlen)转换成bit长度，并存放在context->count中。
+    context->count[0] += inputlen << 3;
 	
-	// 只有当count[0]溢出的时候，才会出现if判断为true，此时count[1]存放高位；
+	// 只有当count[0]溢出的时候，才会出现if判断为true，向count[1]进位，此时count[1]存放高位；
     if(context->count[0] < (inputlen << 3)) 
+		// 向count[1]进位(进1位，count[1]+1)
         context->count[1]++;  
+	
 	/*  存放inputlen的高3位，因为count[0]存放的是长度（byte）的二进制位（bit），乘以8（左移3位）.
-	* 	故而，inputlen的高3位永远不会被存放到count[0]中。将其存放在count[1]中。
+	* 	故而，inputlen的高3位永远不会被存放到count[0]中(溢出)。将其存放在count[1]中。
 	*/
     context->count[1] += inputlen >> 29;  
 	
