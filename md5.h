@@ -1,6 +1,10 @@
 #ifndef MD5_H  
 #define MD5_H  
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "string.h"
 #include "stdio.h"
   
@@ -47,4 +51,8 @@ void _MD5Transform(unsigned int state[4],unsigned char block[64]);
 void _MD5Encode(unsigned char *output,unsigned int *input,unsigned int len);  
 void _MD5Decode(unsigned int *output,unsigned char *input,unsigned int len);  
   
+#ifdef  __cplusplus
+}
+#endif
+ 
 #endif  
