@@ -221,11 +221,12 @@ void _MD5Decode(unsigned int *output,unsigned char *input,unsigned int len)
 /*
 *	函数功能：计算MD5的值的接口函数
 */
-void CalcMD5(MD5_CTX *context, unsigned char *input, unsigned int inputlen, unsigned char digest[16])
+void CalcMD5(unsigned char *input, unsigned int inputlen, unsigned char digest[16])
 {
-	MD5Init(context); 
-	MD5Update(context, input, inputlen);  
-    MD5Final(context, digest);   
+    MD5_CTX context;
+	MD5Init(&context); 
+	MD5Update(&context, input, inputlen);  
+    MD5Final(&context, digest);   
 }
 
 /*  实现功能：

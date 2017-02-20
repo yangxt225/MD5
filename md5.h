@@ -41,7 +41,7 @@ void MD5Final(MD5_CTX *context, unsigned char digest[16]);
 *	MD5Update  
 *   MD5Final 
 */
-void CalcMD5(MD5_CTX *context, unsigned char *input, unsigned int inputlen, unsigned char digest[16]);
+void CalcMD5(unsigned char *input, unsigned int inputlen, unsigned char digest[16]);
 
 void _MD5Transform(unsigned int state[4],unsigned char block[64]);  
 void _MD5Encode(unsigned char *output,unsigned int *input,unsigned int len);  
