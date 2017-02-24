@@ -1,5 +1,5 @@
  
-#include "md5.h"  
+#include "libmd5.h"  
   
 int main(int argc, char *argv[])  
 {  
@@ -11,12 +11,12 @@ int main(int argc, char *argv[])
 	unsigned char decrypt_new[16]; 
 	// Method1:
     //MD5_CTX md5;  
-	//MD5Init(&md5); 
-    //MD5Update(&md5,encrypt,strlen((char *)encrypt));  
-    //MD5Final(&md5,decrypt_old);   
+	//libMD5Init(&md5); 
+    //libMD5Update(&md5,encrypt,strlen((char *)encrypt));  
+    //libMD5Final(&md5,decrypt_old);   
 	
 	// Method2:
-	CalcMD5(encrypt, strlen((char *)encrypt), decrypt_new);
+	libCalcMD5(encrypt, strlen((char *)encrypt), decrypt_new);
 
     printf("Before execute MD5-16: %s\n", encrypt);  
     //printf("after execute MD5-16: ");

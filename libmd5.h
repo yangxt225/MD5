@@ -21,7 +21,7 @@ typedef struct
 /*
 * 	初始化MD5计算所需的4个初始标准幻数
 */
-void MD5Init(MD5_CTX *context); 
+void libMD5Init(MD5_CTX *context); 
 
 /*
 *	函数功能：MD5计算函数；
@@ -29,14 +29,14 @@ void MD5Init(MD5_CTX *context);
 *	param2：输入信息；
 *	param3：输入信息长度；
 */ 
-void MD5Update(MD5_CTX *context, unsigned char *input, unsigned int inputlen);  
+void libMD5Update(MD5_CTX *context, unsigned char *input, unsigned int inputlen);  
 
 /*
 *	函数功能：处理输入信息中最后不足64Bytes的数据内容；
 *	param1：MD5_CTX数据结构指针；
 *	param2：MD5结果最后存放数组；
 */
-void MD5Final(MD5_CTX *context, unsigned char digest[16]);  
+void libMD5Final(MD5_CTX *context, unsigned char digest[16]);  
 
 /*
 *	函数功能：计算MD5的值的接口函数
@@ -45,7 +45,7 @@ void MD5Final(MD5_CTX *context, unsigned char digest[16]);
 *	MD5Update  
 *   MD5Final 
 */
-void CalcMD5(unsigned char *input, unsigned int inputlen, unsigned char digest[16]);
+void libCalcMD5(unsigned char *input, unsigned int inputlen, unsigned char digest[16]);
 
 void _MD5Transform(unsigned int state[4],unsigned char block[64]);  
 void _MD5Encode(unsigned char *output,unsigned int *input,unsigned int len);  

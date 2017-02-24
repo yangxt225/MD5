@@ -13,8 +13,8 @@ main: $(TARGET)
 $(TARGET): md5_test.o
 	$(CC) -o $(TARGET) md5_test.o -L. -lMD5
 
-$(ALIB): md5.o
-	$(AR) $(ARFLAGS) $(ALIB) md5.o
+$(ALIB): libmd5.o
+	$(AR) $(ARFLAGS) $(ALIB) libmd5.o
 
 %.o: %.c
 	$(CC) -c $< $(CLAGS)

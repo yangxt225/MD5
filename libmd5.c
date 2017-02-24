@@ -1,12 +1,12 @@
 /*
-*	md5.c文件：实现MD5算法
+*	libmd5.c文件：实现MD5算法
 *	MD5 算法将输入的信息进行分组，每组512 位（64个 字节），顺序处理完所有分组后输出128 位结果。
 *	将这128 位用十六进制表示便是常见的32 字符的MD5 码，而所谓的16 字符的MD5 码，其实是这32 字符
 *	中间的16 个字符。
 *	在每一组消息的处理中，都要进行4 轮、每轮16 步、总计64 步的处理。
 */
 
-#include "md5.h"  
+#include "libmd5.h"  
 
 #define F(x,y,z) ((x & y) | (~x & z))  
 #define G(x,y,z) ((x & z) | (y & ~z))  
@@ -58,7 +58,7 @@ unsigned char PADDING[]={
 };  
   
 // 实现功能：初始化
-void MD5Init(MD5_CTX *context)  
+void libMD5Init(MD5_CTX *context)  
 {  
 	// 存放输入信息的长度，使用两个uint来存放，count[0]存放低位，count[1]存放高位；
     context->count[0] = 0;  
@@ -87,7 +87,7 @@ void MD5Init(MD5_CTX *context)
 *		input：输入信息，字符
 *		inputlen：字符个数
 */
-void MD5Update(MD5_CTX *context, unsigned char *input, unsigned int inputlen)  
+void libMD5Update(MD5_CTX *context, unsigned char *input, unsigned int inputlen)  
 {  
     unsigned int i = 0, index = 0, partlen = 0;  
 	// 对64(Bytes)取余得到index，字节表示
@@ -136,7 +136,7 @@ void MD5Update(MD5_CTX *context, unsigned char *input, unsigned int inputlen)
 *	实现功能：
 *	处理最后一次读取的消息数据：需要进行相应的数据填充。
 */
-void MD5Final(MD5_CTX *context, unsigned char digest[16])  
+void libMD5Final(MD5_CTX *context, unsigned char digest[16])  
 {  
 	/*
 	*	index： 输入信息最后不足64Bytes的字节数；
@@ -167,16 +167,16 @@ void MD5Final(MD5_CTX *context, unsigned char digest[16])
 	/*  
 	*	最后一次读取,进行数据填充，假设我们的输入信息的长度为80Bytes，
 	*	此时，在MD5Update中，padlen为40Bytes；
-	*	此时，在下面调用 MD5Update(context,input,inputlen) 函数中：
+	*	此时，在下面调用 libMD5Update(context,input,inputlen) 函数中：
 	*	inputlen （= padlen = 40Bytes） >= partlen （= 64 - index = 48Bytes）不成立；
 	*/
-    MD5Update(context, PADDING, padlen);  
+    libMD5Update(context, PADDING, padlen);  
 	
 	/*  
 	*	将8字节的信息数据长度bits加入到context中，
 	*	此时,在MD5Update函数中，满足 inputlen（8Bytes） >= partlen（= 64 - (16+40) = 8Bytes），进入一次MD5操作。
 	*/
-    MD5Update(context, bits, 8);  
+    libMD5Update(context, bits, 8);  
 	
 	// 将最后的md5结果级联起来，存放到目标数组中以便输出
     _MD5Encode(digest, context->state, 16);  
@@ -221,12 +221,12 @@ void _MD5Decode(unsigned int *output,unsigned char *input,unsigned int len)
 /*
 *	函数功能：计算MD5的值的接口函数
 */
-void CalcMD5(unsigned char *input, unsigned int inputlen, unsigned char digest[16])
+void libCalcMD5(unsigned char *input, unsigned int inputlen, unsigned char digest[16])
 {
     MD5_CTX context;
-	MD5Init(&context); 
-	MD5Update(&context, input, inputlen);  
-    MD5Final(&context, digest);   
+	libMD5Init(&context); 
+	libMD5Update(&context, input, inputlen);  
+    libMD5Final(&context, digest);   
 }
 
 /*  实现功能：
